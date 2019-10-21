@@ -80,6 +80,7 @@ function CreatePassword() {
       contentType: "application/json",
       dataType: "json",
       success: function(data) {
+        console.log("RETORNO SUCCESS" , data);
         let json = JSON.parse(data);
         console.log("JSON : ", json);
         alert(json["msg"]);
@@ -89,7 +90,9 @@ function CreatePassword() {
           location.reload();
         }
       },
-      error: function() {
+      error: function(e) {
+        console.log("RETORNO ERR" , e);
+
         alert("Erro na solicitação, tente novamente!");
       }
     });

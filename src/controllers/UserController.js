@@ -13,7 +13,8 @@ module.exports = {
   },
   async store(req, res) {
     try {
-      console.log("REQQQQQ", req.data);
+      console.log("ADASD");
+      console.log("REQQQQQ", req.body);
 
       const { username } = req.body;
       const userExists = await User.findOne({ username });

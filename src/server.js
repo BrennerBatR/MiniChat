@@ -6,10 +6,10 @@ const cors = require("cors");
 const app = express(); //servidor do express para ouvir endereços
 const server = require("http").Server(app); //unindo conexoes http com socket io
 const io = require("socket.io")(server); //agora esta pronto para receber http e socket
+var bodyParser = require('body-parser');
 
 const connectedUsers = {}; //map de id user e id socket para armazenar qual o socket do user. Para melhorar isso , armazenar no mongo
 
-app.use(cors());
 
 io.on("connection", socket => {
   console.log(`Socket conectado: ${socket.id}`);
@@ -45,6 +45,8 @@ app.use((req, res, next) => {
   return next();
 });
 
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes); //adicionando as configs do routes
 

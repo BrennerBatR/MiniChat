@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const bcrypt = require('bcryptjs');
 
 const UserSchema = new Schema(
   {
@@ -8,7 +9,8 @@ const UserSchema = new Schema(
     },
     password: {
       type: String,
-      required: true
+      required: true,
+      select : false
     },
     socket: {
       type: String
@@ -19,4 +21,10 @@ const UserSchema = new Schema(
   }
 );
 
+UserSchema.pre('save' , async function(next){
+    const hash =  await bcrypt.hash(this.password , 10); //(10 = quantas vezes vai encriptar)
+    this.password = hash;
+
+    next();
+})
 module.exports = model("User", UserSchema);

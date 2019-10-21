@@ -4,9 +4,12 @@ const bcrypt = require("bcryptjs");
 module.exports = {
   async index(req, res) {
     try {
-      const users = User.find();
-      return res.json(users);
+      
+      const users = await User.find();
+      return res.send({ users });
+
     } catch (err) {
+      console.log("ERR", err);
       return res.status(500).send("Internal server error");
     }
   },

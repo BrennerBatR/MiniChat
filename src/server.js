@@ -9,6 +9,8 @@ const io = require("socket.io")(server); //agora esta pronto para receber http e
 
 const connectedUsers = {}; //map de id user e id socket para armazenar qual o socket do user. Para melhorar isso , armazenar no mongo
 
+app.use(cors());
+
 io.on("connection", socket => {
   console.log(`Socket conectado: ${socket.id}`);
 
@@ -43,7 +45,6 @@ app.use((req, res, next) => {
   return next();
 });
 
-app.use(cors());
 app.use(express.json());
 app.use(routes); //adicionando as configs do routes
 

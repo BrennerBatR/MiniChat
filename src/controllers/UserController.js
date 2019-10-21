@@ -4,10 +4,8 @@ const bcrypt = require("bcryptjs");
 module.exports = {
   async index(req, res) {
     try {
-      
       const users = await User.find();
       return res.send({ users });
-
     } catch (err) {
       console.log("ERR", err);
       return res.status(500).send("Internal server error");
@@ -15,11 +13,14 @@ module.exports = {
   },
   async store(req, res) {
     try {
+      console.log("REQQQQQ", req.data);
+
       const { username } = req.body;
       const userExists = await User.findOne({ username });
       if (userExists)
         return res.status(409).json({ msg: "User already exists" });
 
+      console.log(req.body);
       const user = await User.create(req.body);
 
       return res.json({ user });

@@ -13,8 +13,7 @@ function Session() {
     var input = $('.validate-input .input100');
 
     $('.enviar').on('click', function () {
-        alert("OLA")
-        var check = true;
+         var check = true;
 
         for (var i = 0; i < input.length; i++) {
             if (validate(input[i]) == false) {
@@ -62,46 +61,47 @@ function Session() {
 })(jQuery);
 
 function SubmitToApi() {
-    let url = sessionStorage.getItem("url");
-    let ra = document.getElementById("username").value;
-    let password = document.getElementById("pass").value;
+    window.location.href = "chat.html"
+    // let url = sessionStorage.getItem("url");
+    // let ra = document.getElementById("username").value;
+    // let password = document.getElementById("pass").value;
 
-    $.ajax({
-        type: 'POST',
-        url: url + '/login',
-        data: {
-            "ra": ra,
-            "password": password
-        },
-        success: function (data) {
+    // $.ajax({
+    //     type: 'POST',
+    //     url: url + '/login',
+    //     data: {
+    //         "ra": ra,
+    //         "password": password
+    //     },
+    //     success: function (data) {
 
-            let json = JSON.parse(data);
+    //         let json = JSON.parse(data);
 
-            if (json['user'] === undefined || json['user'] === null) {
-                let username = document.getElementById("username");
-                let pass = document.getElementById("pass");
-                let thisAlert1 = $(username).parent();
-                let thisAlert2 = $(pass).parent();
-                $(thisAlert1).addClass('alert-validate');
-                $(thisAlert2).addClass('alert-validate');
-                alert(json['msg']);
-            } else {
-                sessionStorage.setItem('ra', json["user"]["ra"]);
-                sessionStorage.setItem('name', json["user"]["name"]);
-                sessionStorage.setItem('id', json["user"]["id"]);
-                if (json["user"]["ra"] === "BrennerAdmin" ||json["user"]["ra"] === "rogbrito") {
-                    window.location.href = "numUser.html";
-                } else {
-                    window.location.href = "notas.html";
+    //         if (json['user'] === undefined || json['user'] === null) {
+    //             let username = document.getElementById("username");
+    //             let pass = document.getElementById("pass");
+    //             let thisAlert1 = $(username).parent();
+    //             let thisAlert2 = $(pass).parent();
+    //             $(thisAlert1).addClass('alert-validate');
+    //             $(thisAlert2).addClass('alert-validate');
+    //             alert(json['msg']);
+    //         } else {
+    //             sessionStorage.setItem('ra', json["user"]["ra"]);
+    //             sessionStorage.setItem('name', json["user"]["name"]);
+    //             sessionStorage.setItem('id', json["user"]["id"]);
+    //             if (json["user"]["ra"] === "BrennerAdmin" ||json["user"]["ra"] === "rogbrito") {
+    //                 window.location.href = "numUser.html";
+    //             } else {
+    //                 window.location.href = "notas.html";
 
-                }
-            }
-        },
-        error: function () {
-            alert("ERRO ao conectar, se persistir informe o suporte!");
-        }
+    //             }
+    //         }
+    //     },
+    //     error: function () {
+    //         alert("ERRO ao conectar, se persistir informe o suporte!");
+    //     }
 
 
-    });
+    // });
 
 }

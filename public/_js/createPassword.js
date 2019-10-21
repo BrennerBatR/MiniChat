@@ -77,23 +77,13 @@ function CreatePassword() {
         username,
         password
       },
-      contentType: "application/json",
-      dataType: "json",
       success: function(data) {
-        console.log("RETORNO SUCCESS" , data);
         let json = JSON.parse(data);
-        console.log("JSON : ", json);
         alert(json["msg"]);
-        if (json["success"] === 2 || json["success"] === -3) {
-          window.location.href = "index.html";
-        } else {
-          location.reload();
-        }
+        window.location.href = "index.html";
       },
-      error: function(e) {
-        console.log("RETORNO ERR" , e);
-
-        alert("Erro na solicitação, tente novamente!");
+      error: function(jqXHR, textStatus) {
+        alert(jqXHR.status + ": " + jqXHR.responseText);
       }
     });
   } else {

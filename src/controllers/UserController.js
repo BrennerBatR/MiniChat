@@ -7,27 +7,21 @@ module.exports = {
       const users = await User.find();
       return res.send({ users });
     } catch (err) {
-      console.log("ERR", err);
-      return res.status(500).send("Internal server error");
+      return res.status(500).send("Erro interno no servidor");
     }
   },
   async store(req, res) {
     try {
-      console.log("ADASD");
-      console.log("REQQQQQ", req.body);
-
       const { username } = req.body;
       const userExists = await User.findOne({ username });
       if (userExists)
-        return res.status(409).json({ msg: "User already exists" });
+        return res.status(409).json("Nome de usuário já cadastrado");
 
-      console.log(req.body);
       const user = await User.create(req.body);
 
-      return res.json({ user });
+      return res.json({ user, msg: "Usuário cadastrado com sucesso" });
     } catch (e) {
-      console.log("ERRO", e);
-      return res.status(500).send({ msg: "Internal server error" });
+      return res.status(500).send("Erro interno no servidor");
     }
   },
   async authenticate(req, res) {
@@ -36,19 +30,18 @@ module.exports = {
 
       const user = await User.findOne({ username }).select("+password");
 
-      if (!user) return res.status(404).send({ error: "User not found" });
+      if (!user)
+        return res.status(404).send({ error: "Usuário não encontrado" });
 
       if (!(await bcrypt.compare(password, user.password)))
         return res.status(403).send({ error: "Invalid Password" });
 
       user.password = undefined;
-
-      //gerando token
       res.send({
         user
       });
     } catch (e) {
-      return res.status(500).send({ msg: "Internal server error" });
+      return res.status(500).send({ msg: "Erro interno no servidor" });
     }
   }
 };

@@ -24,7 +24,7 @@ io.on("connection", socket => {
 
 mongoose
   .connect(
-    //"mongodb+srv://Brenner:dezoitos@cluster0-kdimj.mongodb.net/test?retryWrites=true&w=majority",
+    //"mongodb+srv://Brenner:dezoitos@cluster0-kdimj.mongodb.net/chat?retryWrites=true&w=majority",
     "mongodb://localhost:27017/redesChat",
     {
       useUnifiedTopology: true,

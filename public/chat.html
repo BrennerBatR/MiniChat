@@ -23,13 +23,16 @@
     </form>
 
     <script type="text/javascript">
-        var socket = io('http://localhost:3000'); //url do back-end
+        const userId = sessionStorage.getItem("id");
+        const socket = io('http://localhost:3000', {
+            query: { user: userId } //enviando id para o back
+        });
 
-        function renderMessage(message){
-            $('.messages').append('<div class = "message"><strong>' + message.author + '</strong>: '+ message.message+ ' </div>');
+        function renderMessage(message) {
+            $('.messages').append('<div class = "message"><strong>' + message.author + '</strong>: ' + message.message + ' </div>');
         }
 
-        socket.on('receivedMessage' ,function(message){
+        socket.on('receivedMessage', function (message) {
             renderMessage(message);
         });
 
@@ -42,7 +45,7 @@
 
 
             var messageObject = {
-                author: author,
+                userId,
                 message: message,
             };
 

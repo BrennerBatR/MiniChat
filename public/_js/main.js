@@ -85,7 +85,7 @@ function SubmitToApi() {
             } else {
                 sessionStorage.setItem('username', json["user"]["username"]);
                 sessionStorage.setItem('name', json["user"]["name"]);
-                sessionStorage.setItem('id', json["user"]["id"]);
+                sessionStorage.setItem('id', json["user"]["_id"]);
                 window.location.href = "chat.html"
 
             }

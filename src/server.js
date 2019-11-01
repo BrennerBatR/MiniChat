@@ -2,22 +2,19 @@ const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./routes");
 const cors = require("cors");
+const User = require("./models/User");
+const Message = require("./models/Messages");
 
 const app = express(); //servidor do express para ouvir endereços
 const server = require("http").Server(app); //unindo conexoes http com socket io
 const io = require("socket.io")(server); //agora esta pronto para receber http e socket
 var bodyParser = require('body-parser');
 
-const connectedUsers = {}; //map de id user e id socket para armazenar qual o socket do user. Para melhorar isso , armazenar no mongo
-
-
-io.on("connection", socket => {
-  console.log(`Socket conectado: ${socket.id}`);
-
+io.on("connection", async socket => {
+  const { user } = socket.handshake.query;
+  await User.findByIdAndUpdate({ _id: user }, { socket: socket.id })
   socket.on("sendMessage", data => {
-    //data = mensagem on = ouvir emit = enviar
-    console.log("Message: ", data);
-
+    Message.create(data)
     socket.broadcast.emit("receivedMessage", data); //braodcast envia para todos q estao conectados na aplicção
   });
 });
@@ -28,7 +25,8 @@ mongoose
     "mongodb://localhost:27017/redesChat",
     {
       useUnifiedTopology: true,
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useFindAndModify: false
     }
   )
   .then(() => console.log("DB Connected!"))
@@ -40,8 +38,6 @@ mongoose
 app.use((req, res, next) => {
   //chega aqui antes de ir para as rotas
   req.io = io;
-  req.connectedUsers = connectedUsers; //enviando para o controler esses dados
-
   return next();
 });
 

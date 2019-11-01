@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Message = require("../models/Messages");
 const bcrypt = require("bcryptjs");
 
 module.exports = {
@@ -36,11 +37,16 @@ module.exports = {
       if (!(await bcrypt.compare(password, user.password)))
         return res.status(403).send({ error: "Invalid Password" });
 
+      const messages = await Message.find({ createdAt: { $gte: user.createdAt } }).populate(["userId"])
       user.password = undefined;
+      console.log(user.socket)
+      req.io.to(user.socket).emit('historicMessage', messages);
       res.send({
-        user
+        user,
+        messages
       });
     } catch (e) {
+      console.log(e)
       return res.status(500).send({ msg: "Erro interno no servidor" });
     }
   }

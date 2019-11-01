@@ -74,28 +74,22 @@ function SubmitToApi() {
         },
         success: function (json) {
 
-            if (json['user'] === undefined || json['user'] === null) {
-                let username = document.getElementById("username");
-                let pass = document.getElementById("pass");
-                let thisAlert1 = $(username).parent();
-                let thisAlert2 = $(pass).parent();
-                $(thisAlert1).addClass('alert-validate');
-                $(thisAlert2).addClass('alert-validate');
-                alert(json['msg']);
-            } else {
-                sessionStorage.setItem('username', json["user"]["username"]);
-                sessionStorage.setItem('name', json["user"]["name"]);
-                sessionStorage.setItem('id', json["user"]["_id"]);
-                window.location.href = "chat.html"
+            sessionStorage.setItem('username', json["user"]["username"]);
+            sessionStorage.setItem('id', json["user"]["_id"]);
+            sessionStorage.setItem('messages', json["messages"]);
+            window.location.href = "chat.html"
 
-            }
         },
         error: function (jqXHR) {
             switch (jqXHR.status) {
                 case 403:
+                    // let thisAlert2 = $(pass).parent();
+                    // $(thisAlert2).addClass('alert-validate');
                     alert("Senha incorreta!");
                     break;
-                    case 404:
+                case 404:
+                    // let thisAlert1 = $(username).parent();
+                    // $(thisAlert1).addClass('alert-validate');
                     alert("Usuário não encontrado!");
                     break;
                 default:

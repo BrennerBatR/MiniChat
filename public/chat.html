@@ -14,11 +14,11 @@
 
 </head>
 
-<body>
+<body onload="historicMessages()">
     <form id="chat">
         <!-- <input type="text" name="username" placeholder="Digite seu usuário"> -->
         <div class="messages"></div>
-        <input type="text" name="message" placeholder="Digite sua mensagem">
+        <input type="text" name="message" id="message" placeholder="Digite sua mensagem">
         <button type="submit">Enviar</button>
     </form>
 
@@ -27,24 +27,38 @@
         const socket = io('http://localhost:3000', {
             query: { user: userId } //enviando id para o back
         });
+        function historicMessages() {
+            // const messages = JSON.parse(sessionStorage.getItem('messages'));
+            // console.log(messages)
+            // for (var i = 0; i < messages.length; i++) {
+            //     renderMessage(messages[i]);
+            // }
+        }
 
         function renderMessage(message) {
             $('.messages').append('<div class = "message"><strong>' + message.author + '</strong>: ' + message.message + ' </div>');
         }
 
         socket.on('receivedMessage', function (message) {
+            console.log(message)
             renderMessage(message);
         });
 
+        socket.on('historicMessage', function (messages) {
+            console.log("HSTORIC", messages)
+            for (var i = 0; i < messages.length; i++) {
+                renderMessage(messages[i]);
+            }
+
+        });
 
         $('#chat').submit(function (event) {
             event.preventDefault();
-
-            var author = $('input[name=username]').val();
+            var author = sessionStorage.getItem("username");
             var message = $('input[name=message]').val();
 
-
             var messageObject = {
+                author,
                 userId,
                 message: message,
             };
@@ -52,6 +66,8 @@
             renderMessage(messageObject);
 
             socket.emit('sendMessage', messageObject); //enviando a mensagem por websocket
+            document.getElementById("message").value = "";
+
         });
     </script>
 </body>

@@ -77,8 +77,8 @@ function CreatePassword() {
         username,
         password
       },
-      success: function(data) {
-        let json = JSON.parse(data);
+      success: function(json) {
+        console.log(json.msg)
         alert(json["msg"]);
         window.location.href = "index.html";
       },

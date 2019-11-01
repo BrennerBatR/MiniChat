@@ -76,7 +76,7 @@ function SubmitToApi() {
 
             sessionStorage.setItem('username', json["user"]["username"]);
             sessionStorage.setItem('id', json["user"]["_id"]);
-            sessionStorage.setItem('messages', json["messages"]);
+            sessionStorage.setItem('messages', JSON.stringify(json["messages"]));
             window.location.href = "chat.html"
 
         },

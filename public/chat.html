@@ -28,11 +28,14 @@
             query: { user: userId } //enviando id para o back
         });
         function historicMessages() {
-            // const messages = JSON.parse(sessionStorage.getItem('messages'));
-            // console.log(messages)
-            // for (var i = 0; i < messages.length; i++) {
-            //     renderMessage(messages[i]);
-            // }
+            const messages = JSON.parse(sessionStorage.getItem('messages'));
+            for (var i = 0; i < messages.length; i++) {
+                let message = {
+                    author: messages[i].userId.username,
+                    message: messages[i].message
+                }
+                renderMessage(message);
+            }
         }
 
         function renderMessage(message) {
@@ -46,9 +49,7 @@
 
         socket.on('historicMessage', function (messages) {
             console.log("HSTORIC", messages)
-            for (var i = 0; i < messages.length; i++) {
-                renderMessage(messages[i]);
-            }
+
 
         });
 

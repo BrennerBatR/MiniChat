@@ -39,8 +39,6 @@ module.exports = {
 
       const messages = await Message.find({ createdAt: { $gte: user.createdAt } }).populate(["userId"])
       user.password = undefined;
-      console.log(user.socket)
-      req.io.to(user.socket).emit('historicMessage', messages);
       res.send({
         user,
         messages

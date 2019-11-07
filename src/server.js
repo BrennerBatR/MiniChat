@@ -4,15 +4,18 @@ const routes = require("./routes");
 const cors = require("cors");
 const User = require("./models/User");
 const Message = require("./models/Messages");
+const path = require("path");
 
 const app = express(); //servidor do express para ouvir endereços
 const server = require("http").Server(app); //unindo conexoes http com socket io
 const io = require("socket.io")(server); //agora esta pronto para receber http e socket
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
+
+app.use("/", express.static(path.join(__dirname, "..", "public")));
 
 io.on("connection", async socket => {
   const { user } = socket.handshake.query;
-  await User.findByIdAndUpdate({ _id: user }, { socket: socket.id })
+  await User.findByIdAndUpdate({ _id: user }, { socket: socket.id });
   socket.on("sendMessage", async data => {
     const msg = await Message.create(data);
     data.createdAt = msg.createdAt;

@@ -26,7 +26,7 @@ io.on("connection", async socket => {
 mongoose
   .connect(
     //"mongodb+srv://Brenner:dezoitos@cluster0-kdimj.mongodb.net/chat?retryWrites=true&w=majority",
-    "mongodb://localhost:27017/redesChat",
+    "mongodb://172.16.50.232:27017/redesChat",
     {
       useUnifiedTopology: true,
       useNewUrlParser: true,
@@ -36,7 +36,7 @@ mongoose
   .then(() => console.log("DB Connected!"))
   .catch(err => {
     console.log("MongoDB connection error:", err);
-    res.status(500).send({ msg: "MongoDB connection error" });
+    return({ msg: "MongoDB connection error" });
   });
 
 app.use((req, res, next) => {

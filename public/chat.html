@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <script src="https://momentjs.com/downloads/moment.js"></script>
     <script
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"
@@ -46,7 +47,8 @@
         for (var i = 0; i < messages.length; i++) {
           let message = {
             author: messages[i].userId.username,
-            message: messages[i].message
+            message: messages[i].message,
+            datetime: moment(messages[i].createdAt).format("DD/MM/YY HH:mm")
           };
           renderMessage(message);
         }
@@ -56,19 +58,17 @@
         $(".messages").append(
           '<div class = "message"><strong>' +
             message.author +
-            "</strong>: " +
+            "</strong>" +
+            "<small> (" +
+            message.datetime +
+            "):  </small>" +
             message.message +
             " </div>"
         );
       }
 
       socket.on("receivedMessage", function(message) {
-        console.log(message);
         renderMessage(message);
-      });
-
-      socket.on("historicMessage", function(messages) {
-        console.log("HSTORIC", messages);
       });
 
       $("#chat").submit(function(event) {
@@ -79,7 +79,8 @@
         var messageObject = {
           author,
           userId,
-          message: message
+          message: message,
+          datetime: moment().format("DD/MM/YY HH:mm")
         };
 
         renderMessage(messageObject);

@@ -13,8 +13,9 @@ var bodyParser = require('body-parser');
 io.on("connection", async socket => {
   const { user } = socket.handshake.query;
   await User.findByIdAndUpdate({ _id: user }, { socket: socket.id })
-  socket.on("sendMessage", data => {
-    Message.create(data)
+  socket.on("sendMessage", async data => {
+    const msg = await Message.create(data);
+    data.createdAt = msg.createdAt;
     socket.broadcast.emit("receivedMessage", data); //braodcast envia para todos q estao conectados na aplicção
   });
 });

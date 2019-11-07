@@ -44,7 +44,6 @@ module.exports = {
         messages
       });
     } catch (e) {
-      console.log(e)
       return res.status(500).send({ msg: "Erro interno no servidor" });
     }
   }

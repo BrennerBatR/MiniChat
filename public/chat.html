@@ -4,7 +4,7 @@
     <title>Chat Redes</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link rel="icon" type="image/png" href="images/icons/chatIcon.png" />
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <script
       type="text/javascript"
@@ -21,7 +21,9 @@
   <body onload="logged()">
     <form id="chat">
       <!-- <input type="text" name="username" placeholder="Digite seu usuário"> -->
-      <div class="messages"></div>
+      <div id="scroller">
+        <div id="messagesID" class="messages"></div>
+      </div>
       <input
         type="text"
         name="message"
@@ -76,17 +78,19 @@
         var author = sessionStorage.getItem("username");
         var message = $("input[name=message]").val();
 
-        var messageObject = {
-          author,
-          userId,
-          message: message,
-          datetime: moment().format("DD/MM/YY HH:mm")
-        };
+        if (message != null && message != undefined && message != "") {
+          var messageObject = {
+            author,
+            userId,
+            message: message,
+            datetime: moment().format("DD/MM/YY HH:mm")
+          };
 
-        renderMessage(messageObject);
+          renderMessage(messageObject);
 
-        socket.emit("sendMessage", messageObject); //enviando a mensagem por websocket
-        document.getElementById("message").value = "";
+          socket.emit("sendMessage", messageObject); //enviando a mensagem por websocket
+          document.getElementById("message").value = "";
+        }
       });
     </script>
   </body>

@@ -44,4 +44,10 @@ button {
   border: 1px solid #ddd;
   padding: 20px;
   overflow: auto;
+  overflow-anchor: auto;
+}
+
+#scroller * {
+  /* don't allow the children of the scrollable element to be selected as an anchor node */
+  overflow-anchor: none;
 }

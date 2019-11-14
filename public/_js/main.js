@@ -63,7 +63,7 @@ function Session() {
 function SubmitToApi() {
     let username = document.getElementById("username").value;
     let password = document.getElementById("pass").value;
-    const url = "http://172.16.50.232:3000";
+    const url = "http://localhost:3000";
 
     $.ajax({
         type: 'POST',

@@ -63,7 +63,7 @@
 function CreatePassword() {
   //primeiro login
   // let url = sessionStorage.getItem("url");
-  const url = "http://localhost:3000";
+  const url = "http://192.168.0.5:3000";
   const username = document.getElementById("username").value;
   const pass = document.getElementById("pass");
   const pass2 = document.getElementById("pass2");

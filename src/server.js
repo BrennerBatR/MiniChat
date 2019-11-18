@@ -33,10 +33,10 @@ mongoose
       useFindAndModify: false
     }
   )
-  .then(() => console.log("DB Connected!"))
+  .then("DB connected")
   .catch(err => {
     console.log("MongoDB connection error:", err);
-    return({ msg: "MongoDB connection error" });
+    return { msg: "MongoDB connection error" };
   });
 
 app.use((req, res, next) => {
@@ -50,4 +50,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes); //adicionando as configs do routes
 
-server.listen(3000);
+server.listen(3000, () => {
+  console.log("App is listening Port:", 3000);
+});

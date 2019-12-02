@@ -39,7 +39,7 @@
 
     <script type="text/javascript">
       const userId = sessionStorage.getItem("id");
-      const socket = io("http://192.168.0.5:3000", {
+      const socket = io("http://localhost:3000", {
         query: { user: userId } //enviando id para o back
       });
       function logged() {

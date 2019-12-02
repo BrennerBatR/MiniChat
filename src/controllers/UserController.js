@@ -16,11 +16,13 @@ module.exports = {
       const { username } = req.body;
       const userExists = await User.findOne({ username });
       if (userExists)
-        return res.status(409).json("Nome de usuário já cadastrado");
+        return res
+          .status(409)
+          .json("Nome de usuário já cadastrado! Tente novamente.");
 
       const user = await User.create(req.body);
 
-      return res.json({ user, msg: "Usuário cadastrado com sucesso" });
+      return res.json({ user, msg: "Usuário cadastrado com sucesso!" });
     } catch (e) {
       return res.status(500).send("Erro interno no servidor");
     }
@@ -37,7 +39,9 @@ module.exports = {
       if (!(await bcrypt.compare(password, user.password)))
         return res.status(403).send({ error: "Invalid Password" });
 
-      const messages = await Message.find({ createdAt: { $gte: user.createdAt } }).populate(["userId"])
+      const messages = await Message.find({
+        createdAt: { $gte: user.createdAt }
+      }).populate(["userId"]);
       user.password = undefined;
       res.send({
         user,

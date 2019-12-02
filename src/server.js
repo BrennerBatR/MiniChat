@@ -26,7 +26,7 @@ io.on("connection", async socket => {
 mongoose
   .connect(
     //"mongodb+srv://Brenner:dezoitos@cluster0-kdimj.mongodb.net/chat?retryWrites=true&w=majority",
-    "mongodb://localhost:27017/redesChat",
+    "mongodb://192.168.0.5:27017/redesChat",
     {
       useUnifiedTopology: true,
       useNewUrlParser: true,
